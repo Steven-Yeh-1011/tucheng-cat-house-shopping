@@ -1,0 +1,20 @@
+{
+  "name": "tucheng-cat-house-shopping",
+  "version": "1.0.0",
+  "description": "土城貓宅購物平台 - 全端應用程式",
+  "scripts": {
+    "install:backend": "cd backend && npm install",
+    "build:backend": "cd backend && npm run build",
+    "start:backend": "cd backend && npm start",
+    "dev:backend": "cd backend && npm run dev",
+    "install:frontend": "cd frontend && npm install",
+    "build:frontend": "cd frontend && npm run build",
+    "start:frontend": "cd frontend && npm start",
+    "dev:frontend": "cd frontend && npm start",
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "build:all": "npm run build:backend && npm run build:frontend"
+  },
+  "keywords": ["shopping", "cats", "ecommerce", "react", "nodejs", "typescript"],
+  "author": "Steven Yeh",
+  "license": "MIT"
+}
