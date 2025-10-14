@@ -3,7 +3,7 @@ import axios, { AxiosInstance, AxiosError } from 'axios';
 /**
  * API 客戶端配置
  */
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8011';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 
 class ApiClient {
   private client: AxiosInstance;

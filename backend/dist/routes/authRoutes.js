@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const AuthController_1 = require("../controllers/AuthController");
+const AuthService_1 = require("../services/AuthService");
+const DatabaseService_1 = require("../services/DatabaseService");
+const router = (0, express_1.Router)();
+const databaseService = new DatabaseService_1.DatabaseService();
+const authService = new AuthService_1.AuthService(databaseService);
+const authController = new AuthController_1.AuthController(authService);
+router.post('/register', (req, res) => authController.register(req, res));
+router.post('/login', (req, res) => authController.login(req, res));
+exports.default = router;
+//# sourceMappingURL=authRoutes.js.map

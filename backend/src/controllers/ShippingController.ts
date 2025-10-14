@@ -21,7 +21,7 @@ export class ShippingController {
     try {
       const { city, district, search, limit } = req.query;
 
-      const stores = await this.shippingService.getSevenElevenStores({
+      const stores = await this.shippingService.getSevenElevenShippingStores({
         city: city as string,
         district: district as string,
         search: search as string,
@@ -44,7 +44,7 @@ export class ShippingController {
     try {
       const { city, district, search, limit } = req.query;
 
-      const stores = await this.shippingService.getShopeeStores({
+      const stores = await this.shippingService.getShopeeShippingStores({
         city: city as string,
         district: district as string,
         search: search as string,
@@ -69,7 +69,7 @@ export class ShippingController {
 
       // 驗證輸入
       const schema = Joi.object({
-        shipping_method: Joi.string()
+        method: Joi.string()
           .valid('seven_eleven', 'shopee', 'home_delivery')
           .required(),
         city: Joi.string().optional(),
@@ -90,7 +90,7 @@ export class ShippingController {
 
       const result = this.shippingService.calculateShippingFee(value);
 
-      res.json({
+      return res.json({
         success: true,
         data: result,
       });
@@ -115,7 +115,7 @@ export class ShippingController {
     try {
       const cities = this.shippingService.getCities();
 
-      res.json({
+      return res.json({
         success: true,
         data: cities,
       });

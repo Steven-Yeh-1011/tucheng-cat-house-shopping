@@ -1,5 +1,5 @@
 import { DatabaseService } from './DatabaseService';
-import { Store, ShippingCalculateRequest, ShippingCalculateResponse } from '../types';
+import { ShippingStore, ShippingCalculateRequest, ShippingCalculateResponse } from '../types';
 
 /**
  * 物流服務類別
@@ -20,7 +20,7 @@ export class ShippingService {
     let fee = 0;
     let estimatedDays = 3;
 
-    switch (request.shipping_method) {
+    switch (request.method) {
       case 'seven_eleven':
         fee = ShippingService.SHIPPING_FEES.seven_eleven;
         estimatedDays = 3;
@@ -38,9 +38,9 @@ export class ShippingService {
     }
 
     return {
-      shipping_method: request.shipping_method,
+      method: request.method,
       shipping_fee: fee,
-      estimated_days: estimatedDays,
+      estimatedDays: estimatedDays,
     };
   }
 
@@ -48,16 +48,19 @@ export class ShippingService {
    * 取得 7-11 門市列表
    * 支援縣市鄉鎮篩選和關鍵字搜尋
    */
-  async getSevenElevenStores(params: {
+  async getSevenElevenShippingStores(params: {
     city?: string;
     district?: string;
     search?: string;
     limit?: number;
-  }): Promise<Store[]> {
+  }): Promise<ShippingStore[]> {
     // TODO: 實際整合 7-11 API
     // 這裡先使用模擬資料
-    const mockStores: Store[] = [
+    const mockShippingStores: ShippingStore[] = [
       {
+        id: '711-001',
+        name: '台北車站門市',
+        address: '台北市中正區北平西路3號',
         store_id: '711-001',
         store_name: '台北車站門市',
         store_address: '台北市中正區北平西路3號',
@@ -67,6 +70,9 @@ export class ShippingService {
         is_available: true,
       },
       {
+        id: '711-002',
+        name: '西門町門市',
+        address: '台北市萬華區成都路27號',
         store_id: '711-002',
         store_name: '西門町門市',
         store_address: '台北市萬華區成都路27號',
@@ -76,6 +82,9 @@ export class ShippingService {
         is_available: true,
       },
       {
+        id: '711-003',
+        name: '板橋車站門市',
+        address: '新北市板橋區縣民大道二段7號',
         store_id: '711-003',
         store_name: '板橋車站門市',
         store_address: '新北市板橋區縣民大道二段7號',
@@ -85,6 +94,9 @@ export class ShippingService {
         is_available: true,
       },
       {
+        id: '711-004',
+        name: '土城金城門市',
+        address: '新北市土城區金城路一段101號',
         store_id: '711-004',
         store_name: '土城金城門市',
         store_address: '新北市土城區金城路一段101號',
@@ -95,48 +107,53 @@ export class ShippingService {
       },
     ];
 
-    let filteredStores = mockStores;
+    let filteredShippingStores = mockShippingStores;
 
     // 縣市篩選
     if (params.city) {
-      filteredStores = filteredStores.filter(store => store.city === params.city);
+      filteredShippingStores = filteredShippingStores.filter(store => store.city === params.city);
     }
 
     // 鄉鎮區篩選
     if (params.district) {
-      filteredStores = filteredStores.filter(store => store.district === params.district);
+      filteredShippingStores = filteredShippingStores.filter(store => store.district === params.district);
     }
 
     // 關鍵字搜尋
     if (params.search) {
       const searchLower = params.search.toLowerCase();
-      filteredStores = filteredStores.filter(store =>
-        store.store_name.toLowerCase().includes(searchLower) ||
-        store.store_address.toLowerCase().includes(searchLower)
+      filteredShippingStores = filteredShippingStores.filter(store =>
+        store.name?.toLowerCase().includes(searchLower) ||
+        store.address?.toLowerCase().includes(searchLower) ||
+        store.store_name?.toLowerCase().includes(searchLower) ||
+        store.store_address?.toLowerCase().includes(searchLower)
       );
     }
 
     // 限制數量
     if (params.limit) {
-      filteredStores = filteredStores.slice(0, params.limit);
+      filteredShippingStores = filteredShippingStores.slice(0, params.limit);
     }
 
-    return filteredStores;
+    return filteredShippingStores;
   }
 
   /**
    * 取得蝦皮門市列表
    */
-  async getShopeeStores(params: {
+  async getShopeeShippingStores(params: {
     city?: string;
     district?: string;
     search?: string;
     limit?: number;
-  }): Promise<Store[]> {
+  }): Promise<ShippingStore[]> {
     // TODO: 實際整合蝦皮 API
     // 這裡先使用模擬資料
-    const mockStores: Store[] = [
+    const mockShippingStores: ShippingStore[] = [
       {
+        id: 'shopee-001',
+        name: '蝦皮台北車站店',
+        address: '台北市中正區忠孝西路一段50號',
         store_id: 'shopee-001',
         store_name: '蝦皮台北車站店',
         store_address: '台北市中正區忠孝西路一段50號',
@@ -145,6 +162,9 @@ export class ShippingService {
         is_available: true,
       },
       {
+        id: 'shopee-002',
+        name: '蝦皮板橋店',
+        address: '新北市板橋區文化路一段188號',
         store_id: 'shopee-002',
         store_name: '蝦皮板橋店',
         store_address: '新北市板橋區文化路一段188號',
@@ -153,6 +173,9 @@ export class ShippingService {
         is_available: true,
       },
       {
+        id: 'shopee-003',
+        name: '蝦皮土城店',
+        address: '新北市土城區中央路三段88號',
         store_id: 'shopee-003',
         store_name: '蝦皮土城店',
         store_address: '新北市土城區中央路三段88號',
@@ -162,29 +185,31 @@ export class ShippingService {
       },
     ];
 
-    let filteredStores = mockStores;
+    let filteredShippingStores = mockShippingStores;
 
     if (params.city) {
-      filteredStores = filteredStores.filter(store => store.city === params.city);
+      filteredShippingStores = filteredShippingStores.filter(store => store.city === params.city);
     }
 
     if (params.district) {
-      filteredStores = filteredStores.filter(store => store.district === params.district);
+      filteredShippingStores = filteredShippingStores.filter(store => store.district === params.district);
     }
 
     if (params.search) {
       const searchLower = params.search.toLowerCase();
-      filteredStores = filteredStores.filter(store =>
-        store.store_name.toLowerCase().includes(searchLower) ||
-        store.store_address.toLowerCase().includes(searchLower)
+      filteredShippingStores = filteredShippingStores.filter(store =>
+        store.name?.toLowerCase().includes(searchLower) ||
+        store.address?.toLowerCase().includes(searchLower) ||
+        store.store_name?.toLowerCase().includes(searchLower) ||
+        store.store_address?.toLowerCase().includes(searchLower)
       );
     }
 
     if (params.limit) {
-      filteredStores = filteredStores.slice(0, params.limit);
+      filteredShippingStores = filteredShippingStores.slice(0, params.limit);
     }
 
-    return filteredStores;
+    return filteredShippingStores;
   }
 
   /**

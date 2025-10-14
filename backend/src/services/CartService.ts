@@ -6,6 +6,11 @@ import { CartItem, AddToCartRequest } from '../types';
  * 處理購物車的業務邏輯
  */
 export class CartService {
+  private databaseService: DatabaseService;
+
+  constructor() {
+    this.databaseService = new DatabaseService();
+  }
   /**
    * 取得用戶的購物車內容
    */
@@ -20,13 +25,13 @@ export class CartService {
         p.is_active as product_is_active,
         cat.name as category_name
       FROM cart_items c
-      JOIN products p ON c.product_id = p.id
+      JOIN products p ON c.productId = p.id
       LEFT JOIN categories cat ON p.category_id = cat.id
       WHERE c.user_id = $1
       ORDER BY c.created_at DESC
     `;
 
-    const result = await DatabaseService.query(sql, [userId]);
+    const result = await this.databaseService.query(sql, [userId]);
     return result.rows;
   }
 
@@ -37,10 +42,10 @@ export class CartService {
     // 檢查商品是否已在購物車中
     const checkSql = `
       SELECT * FROM cart_items
-      WHERE user_id = $1 AND product_id = $2
+      WHERE user_id = $1 AND productId = $2
     `;
     
-    const existing = await DatabaseService.query(checkSql, [userId, data.product_id]);
+    const existing = await this.databaseService.query(checkSql, [userId, data.productId]);
 
     if (existing.rows.length > 0) {
       // 如果已存在，更新數量
@@ -52,14 +57,14 @@ export class CartService {
 
     // 新增到購物車
     const sql = `
-      INSERT INTO cart_items (user_id, product_id, quantity)
+      INSERT INTO cart_items (user_id, productId, quantity)
       VALUES ($1, $2, $3)
       RETURNING *
     `;
 
-    const result = await DatabaseService.query(sql, [
+    const result = await this.databaseService.query(sql, [
       userId,
-      data.product_id,
+      data.productId,
       data.quantity,
     ]);
 
@@ -81,7 +86,7 @@ export class CartService {
       RETURNING *
     `;
 
-    const result = await DatabaseService.query(sql, [quantity, cartItemId]);
+    const result = await this.databaseService.query(sql, [quantity, cartItemId]);
     
     if (result.rows.length === 0) {
       throw new Error('購物車項目不存在');
@@ -99,7 +104,7 @@ export class CartService {
       WHERE id = $1 AND user_id = $2
     `;
 
-    const result = await DatabaseService.query(sql, [cartItemId, userId]);
+    const result = await this.databaseService.query(sql, [cartItemId, userId]);
     return (result.rowCount || 0) > 0;
   }
 
@@ -108,7 +113,7 @@ export class CartService {
    */
   async clearCart(userId: number): Promise<boolean> {
     const sql = `DELETE FROM cart_items WHERE user_id = $1`;
-    await DatabaseService.query(sql, [userId]);
+    await this.databaseService.query(sql, [userId]);
     return true;
   }
 
@@ -119,11 +124,11 @@ export class CartService {
     const sql = `
       SELECT SUM(p.price * c.quantity) as total
       FROM cart_items c
-      JOIN products p ON c.product_id = p.id
+      JOIN products p ON c.productId = p.id
       WHERE c.user_id = $1
     `;
 
-    const result = await DatabaseService.query(sql, [userId]);
+    const result = await this.databaseService.query(sql, [userId]);
     return parseFloat(result.rows[0].total || 0);
   }
 
@@ -137,7 +142,7 @@ export class CartService {
       WHERE user_id = $1
     `;
 
-    const result = await DatabaseService.query(sql, [userId]);
+    const result = await this.databaseService.query(sql, [userId]);
     return parseInt(result.rows[0].count || 0);
   }
 }

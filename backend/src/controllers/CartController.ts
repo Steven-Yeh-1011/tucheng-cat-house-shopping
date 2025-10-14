@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { CartService } from '../services/CartService';
-import { AddToCartRequest } from '../types';
+import { AuthenticatedRequest, AddToCartRequest } from '../types';
 import Joi from 'joi';
 
 /**
@@ -17,7 +17,7 @@ export class CartController {
   /**
    * 取得購物車內容
    */
-  async getCart(req: Request, res: Response, next: NextFunction) {
+  async getCart(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
       if (!req.user) {
         return res.status(401).json({
@@ -49,7 +49,7 @@ export class CartController {
   /**
    * 加入商品到購物車
    */
-  async addToCart(req: Request, res: Response, next: NextFunction) {
+  async addToCart(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
       if (!req.user) {
         return res.status(401).json({
@@ -95,7 +95,7 @@ export class CartController {
   /**
    * 更新購物車商品數量
    */
-  async updateCartItem(req: Request, res: Response, next: NextFunction) {
+  async updateCartItem(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
       const cartItemId = parseInt(req.params.id);
       const { quantity } = req.body;
@@ -139,7 +139,7 @@ export class CartController {
   /**
    * 移除購物車商品
    */
-  async removeCartItem(req: Request, res: Response, next: NextFunction) {
+  async removeCartItem(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
       if (!req.user) {
         return res.status(401).json({
@@ -176,7 +176,7 @@ export class CartController {
   /**
    * 清空購物車
    */
-  async clearCart(req: Request, res: Response, next: NextFunction) {
+  async clearCart(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
       if (!req.user) {
         return res.status(401).json({

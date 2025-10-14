@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const CategoryController_1 = require("../controllers/CategoryController");
+const CategoryService_1 = require("../services/CategoryService");
+const DatabaseService_1 = require("../services/DatabaseService");
+const auth_1 = require("../middleware/auth");
+const router = (0, express_1.Router)();
+const databaseService = new DatabaseService_1.DatabaseService();
+const categoryService = new CategoryService_1.CategoryService(databaseService);
+const categoryController = new CategoryController_1.CategoryController(categoryService);
+router.get('/', (req, res) => categoryController.getAllCategories(req, res));
+router.get('/:id', (req, res) => categoryController.getCategoryById(req, res));
+router.post('/', auth_1.authenticateToken, auth_1.requireAdmin, (req, res) => categoryController.createCategory(req, res));
+router.put('/:id', auth_1.authenticateToken, auth_1.requireAdmin, (req, res) => categoryController.updateCategory(req, res));
+router.delete('/:id', auth_1.authenticateToken, auth_1.requireAdmin, (req, res) => categoryController.deleteCategory(req, res));
+exports.default = router;
+//# sourceMappingURL=categoryRoutes.js.map
