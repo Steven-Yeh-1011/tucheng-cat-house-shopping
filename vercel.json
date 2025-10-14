@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "frontend/build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "headers": {
+        "cache-control": "s-maxage=31536000,immutable"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "REACT_APP_API_URL": "https://tucheng-cat-house-backend.onrender.com",
+    "REACT_APP_SUPABASE_URL": "https://yrdekjtgutgulmkkwccx.supabase.co",
+    "REACT_APP_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlyZGVranRndXRndWxta2t3Y2N4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0MDUxMDEsImV4cCI6MjA3NTk4MTEwMX0.hGB9jRJwnjIhrphFAq9FgHNfXB2SJsXyZF2oqVh2WpQ"
+  }
+}
