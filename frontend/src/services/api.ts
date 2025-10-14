@@ -3,7 +3,7 @@ import axios, { AxiosInstance, AxiosError } from 'axios';
 /**
  * API 客戶端配置
  */
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://tucheng-cat-house-backend-v2.onrender.com';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://tucheng-cat-house-shopping.onrender.com';
 
 class ApiClient {
   private client: AxiosInstance;
