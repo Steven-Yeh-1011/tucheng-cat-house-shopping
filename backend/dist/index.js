@@ -12,6 +12,7 @@ const productRoutes_1 = __importDefault(require("./routes/productRoutes"));
 const categoryRoutes_1 = __importDefault(require("./routes/categoryRoutes"));
 const cartRoutes_1 = __importDefault(require("./routes/cartRoutes"));
 const shippingRoutes_1 = __importDefault(require("./routes/shippingRoutes"));
+const orderRoutes_1 = __importDefault(require("./routes/orderRoutes"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 8011;
@@ -27,6 +28,7 @@ app.use('/api/products', productRoutes_1.default);
 app.use('/api/categories', categoryRoutes_1.default);
 app.use('/api/cart', cartRoutes_1.default);
 app.use('/api/shipping', shippingRoutes_1.default);
+app.use('/api/orders', orderRoutes_1.default);
 app.get('/health', (req, res) => {
     res.json({
         success: true,
@@ -45,6 +47,7 @@ app.get('/', (req, res) => {
         categories: '/api/categories',
         cart: '/api/cart',
         shipping: '/api/shipping',
+        orders: '/api/orders',
         admin: '/api/admin'
     });
 });

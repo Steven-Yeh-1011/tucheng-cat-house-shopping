@@ -23,8 +23,9 @@ class ShippingService {
         }
         return {
             method: request.method,
+            cost: fee,
             shipping_fee: fee,
-            estimated_days: estimatedDays,
+            estimatedDays: estimatedDays,
         };
     }
     async getSevenElevenShippingStores(params) {

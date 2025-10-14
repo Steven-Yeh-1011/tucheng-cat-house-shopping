@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { OrderController } from '../controllers/OrderController';
-import { authMiddleware } from '../middleware/auth';
+import { authenticateToken } from '../middleware/auth';
 
 const router = Router();
 const orderController = new OrderController();
 
 // 所有訂單路由都需要認證
-router.use(authMiddleware);
+router.use(authenticateToken);
 
 // 創建訂單
 router.post('/', orderController.createOrder);

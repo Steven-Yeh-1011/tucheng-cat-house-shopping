@@ -39,6 +39,7 @@ export class ShippingService {
 
     return {
       method: request.method,
+      cost: fee,
       shipping_fee: fee,
       estimatedDays: estimatedDays,
     };
