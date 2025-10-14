@@ -24,30 +24,30 @@ export const productService = {
   // 取得所有商品
   getAllProducts: async (): Promise<Product[]> => {
     const response = await api.get('/products');
-    return response.data.data || [];
+    return response.data.products || [];
   },
 
   // 取得單一商品
   getProductById: async (id: number): Promise<Product> => {
     const response = await api.get(`/products/${id}`);
-    return response.data.data;
+    return response.data.product;
   },
 
   // 取得所有分類
   getAllCategories: async (): Promise<Category[]> => {
     const response = await api.get('/categories');
-    return response.data.data || [];
+    return response.data.categories || [];
   },
 
   // 根據分類取得商品
   getProductsByCategory: async (categoryId: number): Promise<Product[]> => {
     const response = await api.get(`/products?category_id=${categoryId}`);
-    return response.data.data || [];
+    return response.data.products || [];
   },
 
   // 搜尋商品
   searchProducts: async (query: string): Promise<Product[]> => {
     const response = await api.get(`/products?search=${encodeURIComponent(query)}`);
-    return response.data.data || [];
+    return response.data.products || [];
   },
 };
