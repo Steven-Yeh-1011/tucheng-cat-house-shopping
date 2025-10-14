@@ -31,4 +31,3 @@ const requireAdmin = (req, res, next) => {
     next();
 };
 exports.requireAdmin = requireAdmin;
-//# sourceMappingURL=auth.js.map

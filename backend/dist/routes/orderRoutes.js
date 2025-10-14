@@ -12,4 +12,3 @@ router.get('/:id', orderController.getOrderById);
 router.patch('/:id/status', orderController.updateOrderStatus);
 router.get('/admin/all', orderController.getAllOrders);
 exports.default = router;
-//# sourceMappingURL=orderRoutes.js.map

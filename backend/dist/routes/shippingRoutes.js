@@ -13,4 +13,3 @@ router.post('/calculate', (req, res, next) => shippingController.calculateShippi
 router.get('/cities', (req, res, next) => shippingController.getCities(req, res, next));
 router.get('/districts', (req, res, next) => shippingController.getDistricts(req, res, next));
 exports.default = router;
-//# sourceMappingURL=shippingRoutes.js.map

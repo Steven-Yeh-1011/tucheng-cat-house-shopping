@@ -70,4 +70,3 @@ app.listen(PORT, () => {
     console.log(`🏥 健康檢查: http://localhost:${PORT}/health`);
 });
 exports.default = app;
-//# sourceMappingURL=index.js.map

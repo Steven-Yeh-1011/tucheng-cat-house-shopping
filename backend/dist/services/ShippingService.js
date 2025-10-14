@@ -176,4 +176,3 @@ ShippingService.SHIPPING_FEES = {
     shopee: 70,
     home_delivery: 90,
 };
-//# sourceMappingURL=ShippingService.js.map

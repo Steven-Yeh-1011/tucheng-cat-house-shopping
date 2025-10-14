@@ -15,4 +15,3 @@ router.post('/', auth_1.authenticateToken, auth_1.requireAdmin, (req, res) => pr
 router.put('/:id', auth_1.authenticateToken, auth_1.requireAdmin, (req, res) => productController.updateProduct(req, res));
 router.delete('/:id', auth_1.authenticateToken, auth_1.requireAdmin, (req, res) => productController.deleteProduct(req, res));
 exports.default = router;
-//# sourceMappingURL=productRoutes.js.map

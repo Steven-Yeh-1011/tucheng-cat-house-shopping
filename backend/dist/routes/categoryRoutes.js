@@ -15,4 +15,3 @@ router.post('/', auth_1.authenticateToken, auth_1.requireAdmin, (req, res) => ca
 router.put('/:id', auth_1.authenticateToken, auth_1.requireAdmin, (req, res) => categoryController.updateCategory(req, res));
 router.delete('/:id', auth_1.authenticateToken, auth_1.requireAdmin, (req, res) => categoryController.deleteCategory(req, res));
 exports.default = router;
-//# sourceMappingURL=categoryRoutes.js.map

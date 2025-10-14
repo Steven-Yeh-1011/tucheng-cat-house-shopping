@@ -14,4 +14,3 @@ router.put('/:id', auth_1.authenticateToken, (req, res, next) => cartController.
 router.delete('/:id', auth_1.authenticateToken, (req, res, next) => cartController.removeCartItem(req, res, next));
 router.delete('/', auth_1.authenticateToken, (req, res, next) => cartController.clearCart(req, res, next));
 exports.default = router;
-//# sourceMappingURL=cartRoutes.js.map

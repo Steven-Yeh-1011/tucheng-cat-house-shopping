@@ -31,10 +31,10 @@ app.use((0, cors_1.default)({
         if (!origin)
             return callback(null, true);
         if (allowedOrigins.includes(origin)) {
-            callback(null, true);
+            return callback(null, true);
         }
         else {
-            callback(new Error('Not allowed by CORS'));
+            return callback(new Error('Not allowed by CORS'));
         }
     },
     credentials: true,
@@ -144,7 +144,11 @@ app.get('/api/products/:id', async (req, res) => {
                     product: null
                 });
             }
-            throw error;
+            return res.status(500).json({
+                success: false,
+                error: error.message,
+                product: null
+            });
         }
         res.json({
             success: true,
@@ -182,4 +186,3 @@ app.listen(port, () => {
     console.log(`🌍 環境: ${process.env.NODE_ENV || 'development'}`);
 });
 exports.default = app;
-//# sourceMappingURL=simple-server.js.map

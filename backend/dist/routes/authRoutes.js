@@ -11,4 +11,3 @@ const authController = new AuthController_1.AuthController(authService);
 router.post('/register', (req, res) => authController.register(req, res));
 router.post('/login', (req, res) => authController.login(req, res));
 exports.default = router;
-//# sourceMappingURL=authRoutes.js.map
