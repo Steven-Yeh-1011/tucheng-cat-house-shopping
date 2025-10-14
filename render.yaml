@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: tucheng-cat-house-backend
+    env: node
+    region: singapore
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 18
+      - key: PORT
+        value: 10000
+      - key: SUPABASE_URL
+        value: https://yrdekjtgutgulmkkwccx.supabase.co
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlyZGVranRndXRndWxta2t3Y2N4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2MDQwNTEwMSwiZXhwIjoyMDc1OTgxMTAxfQ.3r7Z8VnQmK2fLx9Yp6H1jR4sT8wE5uI7oP3mN0bC2vX
+      - key: SUPABASE_ANON_KEY
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlyZGVranRndXRndWxta2t3Y2N4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0MDUxMDEsImV4cCI6MjA3NTk4MTEwMX0.hGB9jRJwnjIhrphFAq9FgHNfXB2SJsXyZF2oqVh2WpQ
+      - key: JWT_SECRET
+        value: tucheng-cat-house-jwt-secret-2024
+      - key: CORS_ORIGINS
+        value: https://tucheng-cat-house-shopping-fdm7.vercel.app

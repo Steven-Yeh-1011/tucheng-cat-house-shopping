@@ -2,7 +2,11 @@
   "name": "tucheng-cat-house-shopping",
   "version": "1.0.0",
   "description": "土城貓宅購物平台 - 全端應用程式",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
+    "build": "echo 'No build step needed for simple Node.js app'",
+    "dev": "nodemon server.js",
     "install:backend": "cd backend && npm install",
     "build:backend": "cd backend && npm run build",
     "start:backend": "cd backend && npm start",
@@ -16,5 +20,16 @@
   },
   "keywords": ["shopping", "cats", "ecommerce", "react", "nodejs", "typescript"],
   "author": "Steven Yeh",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "helmet": "^6.1.5",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
 }
