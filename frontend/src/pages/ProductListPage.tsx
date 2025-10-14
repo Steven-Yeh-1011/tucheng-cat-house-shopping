@@ -6,221 +6,8 @@ import { productService } from '../services/productService';
 import { useCart } from '../hooks/useCart';
 import authService from '../services/authService';
 
-const Container = styled.div`
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-`;
-
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-  padding: 20px 0;
-  border-bottom: 2px solid var(--border-light);
-`;
-
-const HeaderButtons = styled.div`
-  display: flex;
-  gap: 12px;
-  align-items: center;
-`;
-
-const Title = styled.h1`
-  color: var(--navy-blue);
-  font-size: 2rem;
-  margin: 0;
-`;
-
-const CartButton = styled.button`
-  background: var(--navy-blue);
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background: #0d1a5c;
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
-`;
-
-const AdminButton = styled.button`
-  background: #dc3545;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background: #c82333;
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
-`;
-
-const LoginButton = styled.button`
-  background: #28a745;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background: #218838;
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
-`;
-
-const FilterBar = styled.div`
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-`;
-
-const FilterButton = styled.button<{ $active?: boolean }>`
-  background: ${props => props.$active ? 'var(--navy-blue)' : 'white'};
-  color: ${props => props.$active ? 'white' : 'var(--navy-blue)'};
-  border: 2px solid var(--navy-blue);
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: var(--navy-blue);
-    color: white;
-  }
-`;
-
-const SearchInput = styled.input`
-  flex: 1;
-  min-width: 200px;
-  padding: 12px 16px;
-  border: 2px solid var(--border-light);
-  border-radius: 8px;
-  font-size: 1rem;
-
-  &:focus {
-    outline: none;
-    border-color: var(--navy-blue);
-  }
-`;
-
-const ProductGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-`;
-
-const ProductCard = styled.div`
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  }
-`;
-
-const ProductImage = styled.div`
-  width: 100%;
-  height: 200px;
-  background: var(--cream);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 15px;
-  color: var(--text-light);
-  font-size: 1.1rem;
-`;
-
-const ProductName = styled.h3`
-  color: var(--navy-blue);
-  margin-bottom: 10px;
-  font-size: 1.2rem;
-  line-height: 1.4;
-`;
-
-const ProductPrice = styled.div`
-  color: var(--salmon-pink);
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 15px;
-`;
-
-const AddToCartButton = styled.button<{ disabled?: boolean }>`
-  background: ${props => props.disabled ? '#ccc' : 'var(--navy-blue)'};
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
-  font-size: 1rem;
-  transition: background-color 0.2s ease;
-  width: 100%;
-
-  &:hover:not(:disabled) {
-    background: #0d1a5c;
-  }
-
-  &:active:not(:disabled) {
-    transform: scale(0.98);
-  }
-`;
-
-const LoadingSpinner = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
-  font-size: 1.2rem;
-  color: var(--text-light);
-`;
-
-const ErrorMessage = styled.div`
-  text-align: center;
-  color: #e74c3c;
-  font-size: 1.1rem;
-  padding: 40px 20px;
-`;
-
 /**
- * 商品列表頁面
+ * 商品列表頁面（可愛粉色手機版）
  */
 export const ProductListPage: React.FC = () => {
   const navigate = useNavigate();
@@ -228,11 +15,11 @@ export const ProductListPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = React.useState<number | null>(null);
   const [searchQuery, setSearchQuery] = React.useState('');
   
-  // 獲取當前用戶信息
+  // 獲取用戶信息
   const currentUser = authService.getUser();
   const isAdmin = currentUser?.role === 'admin';
 
-  // 取得商品列表
+  // 獲取商品列表
   const { data: products = [], isLoading, error } = useQuery({
     queryKey: ['products', selectedCategory, searchQuery],
     queryFn: () => {
@@ -246,7 +33,7 @@ export const ProductListPage: React.FC = () => {
     },
   });
 
-  // 取得分類列表
+  // 獲取分類列表
   const { data: categories = [] } = useQuery({
     queryKey: ['categories'],
     queryFn: productService.getAllCategories,
@@ -270,7 +57,7 @@ export const ProductListPage: React.FC = () => {
 
   const handleLogout = () => {
     authService.logout();
-    window.location.reload(); // 重新載入頁面以更新用戶狀態
+    window.location.reload();
   };
 
   return (
@@ -282,15 +69,15 @@ export const ProductListPage: React.FC = () => {
             <>
               {isAdmin && (
                 <AdminButton onClick={handleAdminClick}>
-                  🔧 管理後台
+                  🛠️ 管理後台
                 </AdminButton>
               )}
               <CartButton onClick={handleCartClick}>
                 🛒 購物車
               </CartButton>
-              <LoginButton onClick={handleLogout}>
-                👤 登出 ({currentUser.email})
-              </LoginButton>
+              <LogoutButton onClick={handleLogout}>
+                👋 登出
+              </LogoutButton>
             </>
           ) : (
             <>
@@ -321,49 +108,68 @@ export const ProductListPage: React.FC = () => {
             {category.name}
           </FilterButton>
         ))}
+      </FilterBar>
+
+      <SearchBar>
         <SearchInput
           type="text"
-          placeholder="搜尋商品..."
+          placeholder="🔍 搜尋商品..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-      </FilterBar>
+      </SearchBar>
 
-      {isLoading && <LoadingSpinner>載入中...</LoadingSpinner>}
+      {isLoading && (
+        <LoadingContainer>
+          <LoadingSpinner>🐾</LoadingSpinner>
+          <LoadingText>載入中...</LoadingText>
+        </LoadingContainer>
+      )}
       
       {error && (
         <ErrorMessage>
-          載入商品時發生錯誤，請稍後再試
+          <ErrorIcon>😿</ErrorIcon>
+          <ErrorText>載入商品時發生錯誤，請稍後再試</ErrorText>
         </ErrorMessage>
       )}
 
       {!isLoading && !error && products.length === 0 && (
-        <ErrorMessage>
-          {searchQuery ? '找不到符合搜尋條件的商品' : '暫無商品'}
-        </ErrorMessage>
+        <EmptyMessage>
+          <EmptyIcon>🙀</EmptyIcon>
+          <EmptyText>
+            {searchQuery ? '找不到符合搜尋條件的商品' : '暫無商品'}
+          </EmptyText>
+        </EmptyMessage>
       )}
 
       <ProductGrid>
         {products.map(product => (
-          <ProductCard key={product.id}>
+          <ProductCard key={product.id} onClick={() => navigate(`/products/${product.id}`)}>
             <ProductImage>
               {product.image_url ? (
                 <img 
                   src={product.image_url} 
                   alt={product.name}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }}
                 />
               ) : (
-                '商品圖片'
+                <PlaceholderIcon>📦</PlaceholderIcon>
               )}
             </ProductImage>
-            <ProductName>{product.name}</ProductName>
-            <ProductPrice>NT$ {product.price.toLocaleString()}</ProductPrice>
+            <ProductInfo>
+              <ProductName>{product.name}</ProductName>
+              <ProductPrice>NT$ {product.price.toLocaleString()}</ProductPrice>
+              <StockInfo $inStock={product.stock > 0}>
+                {product.stock > 0 ? `庫存: ${product.stock}` : '缺貨中'}
+              </StockInfo>
+            </ProductInfo>
             <AddToCartButton
-              onClick={() => handleAddToCart(product.id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAddToCart(product.id);
+              }}
               disabled={isAddingToCart || product.stock === 0}
             >
-              {product.stock === 0 ? '缺貨中' : '加入購物車'}
+              {product.stock === 0 ? '😿 缺貨中' : '🛒 加入購物車'}
             </AddToCartButton>
           </ProductCard>
         ))}
@@ -371,3 +177,337 @@ export const ProductListPage: React.FC = () => {
     </Container>
   );
 };
+
+// Styled Components（可愛粉色手機版）
+const Container = styled.div`
+  width: 100%;
+  max-width: 100vw;
+  min-height: 100vh;
+  padding: 1rem;
+  background: var(--color-background);
+  overflow-x: hidden;
+`;
+
+const Header = styled.header`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--color-border);
+`;
+
+const HeaderButtons = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+`;
+
+const Title = styled.h1`
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  margin: 0;
+  font-weight: 700;
+`;
+
+const CartButton = styled.button`
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+
+  &:hover {
+    background: var(--color-primary-dark);
+    box-shadow: var(--shadow-md);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+const AdminButton = styled.button`
+  background: #FF6B9D;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+
+  &:hover {
+    background: #FF1493;
+    box-shadow: var(--shadow-md);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+const LoginButton = styled.button`
+  background: #FFB3D9;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+
+  &:hover {
+    background: #FF69B4;
+    box-shadow: var(--shadow-md);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+const LogoutButton = styled.button`
+  background: #FFC0CB;
+  color: var(--color-text);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+
+  &:hover {
+    background: #FFB3D9;
+    box-shadow: var(--shadow-md);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+const FilterBar = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.5rem;
+
+  /* 隱藏滾動條但保持功能 */
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const FilterButton = styled.button<{ $active?: boolean }>`
+  background: ${props => props.$active ? 'var(--color-primary)' : 'white'};
+  color: ${props => props.$active ? 'white' : 'var(--color-primary)'};
+  border: 2px solid var(--color-primary);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all var(--transition-normal);
+  box-shadow: ${props => props.$active ? 'var(--shadow-sm)' : 'none'};
+
+  &:hover {
+    background: var(--color-primary);
+    color: white;
+    box-shadow: var(--shadow-sm);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+const SearchBar = styled.div`
+  margin-bottom: 1rem;
+`;
+
+const SearchInput = styled.input`
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  font-size: 0.9rem;
+  background: white;
+  transition: all var(--transition-normal);
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.1);
+  }
+
+  &::placeholder {
+    color: var(--color-text-light);
+  }
+`;
+
+const ProductGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+`;
+
+const ProductCard = styled.div`
+  background: var(--color-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: var(--shadow-md);
+  }
+`;
+
+const ProductImage = styled.div`
+  width: 100%;
+  height: 200px;
+  background: var(--color-accent);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+  }
+`;
+
+const PlaceholderIcon = styled.div`
+  font-size: 3rem;
+  opacity: 0.3;
+`;
+
+const ProductInfo = styled.div`
+  margin-bottom: 1rem;
+`;
+
+const ProductName = styled.h3`
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.4;
+`;
+
+const ProductPrice = styled.div`
+  color: var(--color-primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+`;
+
+const StockInfo = styled.div<{ $inStock: boolean }>`
+  color: ${props => props.$inStock ? 'var(--color-success)' : 'var(--color-error)'};
+  font-size: 0.85rem;
+  font-weight: 600;
+`;
+
+const AddToCartButton = styled.button<{ disabled?: boolean }>`
+  background: ${props => props.disabled ? '#E0E0E0' : 'var(--color-primary)'};
+  color: ${props => props.disabled ? 'var(--color-text-light)' : 'white'};
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-lg);
+  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+  font-size: 1rem;
+  font-weight: 600;
+  width: 100%;
+  box-shadow: ${props => props.disabled ? 'none' : 'var(--shadow-sm)'};
+  transition: all var(--transition-normal);
+
+  &:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    box-shadow: var(--shadow-md);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  gap: 1rem;
+`;
+
+const LoadingSpinner = styled.div`
+  font-size: 3rem;
+  animation: bounce 1s ease-in-out infinite;
+`;
+
+const LoadingText = styled.div`
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+`;
+
+const ErrorMessage = styled.div`
+  text-align: center;
+  padding: 2rem 1rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+`;
+
+const ErrorIcon = styled.div`
+  font-size: 3rem;
+  margin-bottom: 1rem;
+`;
+
+const ErrorText = styled.div`
+  color: var(--color-error);
+  font-size: 1rem;
+  font-weight: 600;
+`;
+
+const EmptyMessage = styled.div`
+  text-align: center;
+  padding: 2rem 1rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+`;
+
+const EmptyIcon = styled.div`
+  font-size: 3rem;
+  margin-bottom: 1rem;
+`;
+
+const EmptyText = styled.div`
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+`;

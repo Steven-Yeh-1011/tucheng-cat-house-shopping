@@ -148,9 +148,12 @@ const ProductDetailPage: React.FC = () => {
 };
 
 const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+  width: 100%;
+  max-width: 100vw;
+  min-height: 100vh;
+  padding: 1rem;
+  background: var(--color-background);
+  overflow-x: hidden;
 `;
 
 const LoadingMessage = styled.div`
@@ -183,14 +186,13 @@ const BackButton = styled.button`
 `;
 
 const ProductWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  box-shadow: var(--shadow-md);
 `;
 
 const ImageSection = styled.div`
@@ -199,21 +201,22 @@ const ImageSection = styled.div`
 
 const ProductImage = styled.img`
   width: 100%;
-  max-height: 500px;
-  object-fit: contain;
-  border-radius: 12px;
-  background: var(--color-background);
+  height: 300px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  background: var(--color-accent);
 `;
 
 const ImagePlaceholder = styled.div`
   width: 100%;
-  height: 500px;
+  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 8rem;
-  background: var(--color-background);
-  border-radius: 12px;
+  font-size: 5rem;
+  background: var(--color-accent);
+  border-radius: var(--radius-lg);
+  opacity: 0.3;
 `;
 
 const InfoSection = styled.div`
@@ -223,15 +226,17 @@ const InfoSection = styled.div`
 `;
 
 const ProductName = styled.h1`
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: var(--color-text);
   margin: 0;
+  font-weight: 700;
+  line-height: 1.4;
 `;
 
 const ProductPrice = styled.div`
-  font-size: 2rem;
+  font-size: 1.75rem;
   color: var(--color-primary);
-  font-weight: 600;
+  font-weight: 700;
 `;
 
 const ProductDescription = styled.p`
@@ -282,22 +287,32 @@ const QuantityControl = styled.div`
 const QuantityButton = styled.button`
   width: 36px;
   height: 36px;
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-primary);
   background: white;
-  border-radius: 8px;
+  color: var(--color-primary);
+  border-radius: var(--radius-md);
   cursor: pointer;
   font-size: 1.2rem;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all var(--transition-normal);
 
   &:hover:not(:disabled) {
-    background: var(--color-background);
+    background: var(--color-primary);
+    color: white;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.9);
   }
 
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    border-color: #E0E0E0;
+    color: var(--color-text-light);
   }
 `;
 
@@ -322,54 +337,67 @@ const QuantityInput = styled.input`
 
 const ButtonGroup = styled.div`
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.75rem;
   margin-top: 1rem;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
 `;
 
 const AddToCartButton = styled.button`
-  flex: 1;
-  padding: 1rem 2rem;
+  width: 100%;
+  padding: 1rem 1.5rem;
   background: white;
   color: var(--color-primary);
   border: 2px solid var(--color-primary);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
 
   &:hover:not(:disabled) {
     background: var(--color-primary);
     color: white;
+    box-shadow: var(--shadow-md);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.95);
   }
 
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    box-shadow: none;
   }
 `;
 
 const BuyNowButton = styled.button`
-  flex: 1;
-  padding: 1rem 2rem;
+  width: 100%;
+  padding: 1rem 1.5rem;
   background: var(--color-primary);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
 
   &:hover:not(:disabled) {
     background: var(--color-primary-dark);
+    box-shadow: var(--shadow-md);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.95);
   }
 
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    box-shadow: none;
   }
 `;
 

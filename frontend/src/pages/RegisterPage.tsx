@@ -110,58 +110,66 @@ const RegisterPage: React.FC = () => {
 };
 
 const Container = styled.div`
+  width: 100%;
+  max-width: 100vw;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
-  padding: 2rem;
+  background: linear-gradient(135deg, #FFE4E1 0%, #FFB3D9 50%, #FF69B4 100%);
+  padding: 1rem;
+  overflow-x: hidden;
 `;
 
 const RegisterCard = styled.div`
   background: white;
-  border-radius: 16px;
-  padding: 3rem;
+  border-radius: var(--radius-xl);
+  padding: 2rem 1.5rem;
   width: 100%;
-  max-width: 400px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  box-shadow: var(--shadow-xl);
+  animation: slideUp 0.3s ease;
 `;
 
 const Logo = styled.div`
-  font-size: 4rem;
+  font-size: 3.5rem;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+  animation: bounce 2s ease-in-out infinite;
 `;
 
 const Title = styled.h1`
   color: var(--color-primary);
   text-align: center;
   margin-bottom: 0.5rem;
-  font-size: 1.5rem;
+  font-size: 1.35rem;
+  font-weight: 700;
 `;
 
 const Subtitle = styled.h2`
   color: var(--color-text-secondary);
   text-align: center;
-  font-size: 1.2rem;
-  font-weight: normal;
-  margin-bottom: 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
 `;
 
 const ErrorMessage = styled.div`
-  background: #fee;
-  color: #c33;
+  background: #FFE4E1;
+  color: var(--color-error);
   padding: 0.75rem 1rem;
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
-  font-size: 0.9rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
   text-align: center;
+  font-weight: 600;
+  border: 2px solid var(--color-error);
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 `;
 
 const FormGroup = styled.div`
@@ -172,19 +180,25 @@ const FormGroup = styled.div`
 
 const Label = styled.label`
   color: var(--color-text);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.9rem;
 `;
 
 const Input = styled.input`
   padding: 0.75rem 1rem;
   border: 2px solid var(--color-border);
-  border-radius: 8px;
-  font-size: 1rem;
+  border-radius: var(--radius-lg);
+  font-size: 0.9rem;
+  transition: all var(--transition-normal);
 
   &:focus {
     outline: none;
     border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.1);
+  }
+
+  &::placeholder {
+    color: var(--color-text-light);
   }
 `;
 
@@ -193,19 +207,27 @@ const SubmitButton = styled.button`
   background: var(--color-primary);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   margin-top: 0.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
 
   &:hover:not(:disabled) {
     background: var(--color-primary-dark);
+    box-shadow: var(--shadow-md);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.95);
   }
 
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+    box-shadow: none;
   }
 `;
 

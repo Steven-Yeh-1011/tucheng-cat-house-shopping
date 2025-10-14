@@ -50,4 +50,33 @@ export const productService = {
     const response = await api.get(`/products?search=${encodeURIComponent(query)}`);
     return response.data.products || [];
   },
+
+  // 管理員功能：創建商品
+  createProduct: async (productData: Omit<Product, 'id' | 'created_at' | 'updated_at'>): Promise<Product> => {
+    const response = await api.post('/products', productData);
+    return response.data.product;
+  },
+
+  // 管理員功能：更新商品
+  updateProduct: async (id: number, productData: Partial<Product>): Promise<Product> => {
+    const response = await api.put(`/products/${id}`, productData);
+    return response.data.product;
+  },
+
+  // 管理員功能：刪除商品
+  deleteProduct: async (id: number): Promise<void> => {
+    await api.delete(`/products/${id}`);
+  },
+
+  // 管理員功能：上傳商品圖片
+  uploadProductImage: async (id: number, file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await api.post(`/products/${id}/image`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data.image_url;
+  },
 };
