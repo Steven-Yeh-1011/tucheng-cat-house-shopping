@@ -7,19 +7,18 @@ import { useCart } from '../hooks/useCart';
 import authService from '../services/authService';
 
 /**
- * 商品列表頁面（可愛粉色手機版）
- */
+ * ?��??�表?�面（可?��??��?機�?�? */
 export const ProductListPage: React.FC = () => {
   const navigate = useNavigate();
   const { addToCart, isAddingToCart } = useCart();
   const [selectedCategory, setSelectedCategory] = React.useState<number | null>(null);
   const [searchQuery, setSearchQuery] = React.useState('');
   
-  // 獲取用戶信息
+  // ?��??�戶信息
   const currentUser = authService.getUser();
   const isAdmin = currentUser?.role === 'admin';
 
-  // 獲取商品列表
+  // ?��??��??�表
   const { data: products = [], isLoading, error } = useQuery({
     queryKey: ['products', selectedCategory, searchQuery],
     queryFn: () => {
@@ -33,7 +32,7 @@ export const ProductListPage: React.FC = () => {
     },
   });
 
-  // 獲取分類列表
+  // ?��??��??�表
   const { data: categories = [] } = useQuery({
     queryKey: ['categories'],
     queryFn: productService.getAllCategories,
@@ -63,29 +62,27 @@ export const ProductListPage: React.FC = () => {
   return (
     <Container>
       <Header>
-        <Title>🐱 土城貓舍購物網</Title>
+        <Title>?�� ?��?貓�?購物�?/Title>
         <HeaderButtons>
           {currentUser ? (
             <>
               {isAdmin && (
                 <AdminButton onClick={handleAdminClick}>
-                  🛠️ 管理後台
+                  ??�?管�?後台
                 </AdminButton>
               )}
               <CartButton onClick={handleCartClick}>
-                🛒 購物車
-              </CartButton>
+                ?? 購物�?              </CartButton>
               <LogoutButton onClick={handleLogout}>
-                👋 登出
+                ?? ?�出
               </LogoutButton>
             </>
           ) : (
             <>
               <CartButton onClick={handleCartClick}>
-                🛒 購物車
-              </CartButton>
+                ?? 購物�?              </CartButton>
               <LoginButton onClick={handleLoginClick}>
-                🔑 登入
+                ?? ?�入
               </LoginButton>
             </>
           )}
@@ -97,7 +94,7 @@ export const ProductListPage: React.FC = () => {
           $active={selectedCategory === null}
           onClick={() => setSelectedCategory(null)}
         >
-          全部商品
+          ?�部?��?
         </FilterButton>
         {categories.map(category => (
           <FilterButton
@@ -113,7 +110,7 @@ export const ProductListPage: React.FC = () => {
       <SearchBar>
         <SearchInput
           type="text"
-          placeholder="🔍 搜尋商品..."
+          placeholder="?? ?��??��?..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -121,23 +118,23 @@ export const ProductListPage: React.FC = () => {
 
       {isLoading && (
         <LoadingContainer>
-          <LoadingSpinner>🐾</LoadingSpinner>
-          <LoadingText>載入中...</LoadingText>
+          <LoadingSpinner>?��</LoadingSpinner>
+          <LoadingText>載入�?..</LoadingText>
         </LoadingContainer>
       )}
       
       {error && (
         <ErrorMessage>
-          <ErrorIcon>😿</ErrorIcon>
-          <ErrorText>載入商品時發生錯誤，請稍後再試</ErrorText>
+          <ErrorIcon>?��</ErrorIcon>
+          <ErrorText>載入?��??�發?�錯誤�?請�?後�?�?/ErrorText>
         </ErrorMessage>
       )}
 
       {!isLoading && !error && products.length === 0 && (
         <EmptyMessage>
-          <EmptyIcon>🙀</EmptyIcon>
+          <EmptyIcon>??</EmptyIcon>
           <EmptyText>
-            {searchQuery ? '找不到符合搜尋條件的商品' : '暫無商品'}
+            {searchQuery ? '?��??�符?��?尋�?件�??��?' : '?�無?��?'}
           </EmptyText>
         </EmptyMessage>
       )}
@@ -152,14 +149,14 @@ export const ProductListPage: React.FC = () => {
                   alt={product.name}
                 />
               ) : (
-                <PlaceholderIcon>📦</PlaceholderIcon>
+                <PlaceholderIcon>?��</PlaceholderIcon>
               )}
             </ProductImage>
             <ProductInfo>
               <ProductName>{product.name}</ProductName>
               <ProductPrice>NT$ {product.price.toLocaleString()}</ProductPrice>
               <StockInfo $inStock={product.stock > 0}>
-                {product.stock > 0 ? `庫存: ${product.stock}` : '缺貨中'}
+                {product.stock > 0 ? `庫�?: ${product.stock}` : '缺貨�?}
               </StockInfo>
             </ProductInfo>
             <AddToCartButton
@@ -169,7 +166,7 @@ export const ProductListPage: React.FC = () => {
               }}
               disabled={isAddingToCart || product.stock === 0}
             >
-              {product.stock === 0 ? '😿 缺貨中' : '🛒 加入購物車'}
+              {product.stock === 0 ? '?�� 缺貨�? : '?? ?�入購物�?}
             </AddToCartButton>
           </ProductCard>
         ))}
@@ -178,8 +175,7 @@ export const ProductListPage: React.FC = () => {
   );
 };
 
-// Styled Components（可愛粉色手機版）
-const Container = styled.div`
+// Styled Components（可?��??��?機�?�?const Container = styled.div`
   width: 100%;
   max-width: 100vw;
   min-height: 100vh;
@@ -306,7 +302,7 @@ const FilterBar = styled.div`
   -webkit-overflow-scrolling: touch;
   padding-bottom: 0.5rem;
 
-  /* 隱藏滾動條但保持功能 */
+  /* ?��?滾�?條�?保�??�能 */
   scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
@@ -323,6 +319,14 @@ const FilterButton = styled.button<{ $active?: boolean }>`
   font-size: 0.85rem;
   font-weight: 600;
   white-space: nowrap;
+  flex-shrink: 0;
+  min-width: fit-content;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: all var(--transition-normal);
   box-shadow: ${props => props.$active ? 'var(--shadow-sm)' : 'none'};
 
