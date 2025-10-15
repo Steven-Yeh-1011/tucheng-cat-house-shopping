@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -38,7 +38,9 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // CORS 設定
 const allowedOrigins = process.env.CORS_ORIGINS?.split(',') || [
   'http://localhost:3000',
-  'https://localhost:3000'
+  'http://localhost:3011',
+  'https://localhost:3000',
+  'https://localhost:3011'
 ];
 
 app.use(cors({
@@ -58,7 +60,7 @@ app.use(cors({
 // 路由定義
 
 // 根路由
-app.get('/', (req: Request, res: Response) => {
+app.get('/', (req, res) => {
   res.json({
     message: '🐱 土城貓宅購物 API 服務運行中',
     version: '1.0.0',
@@ -67,7 +69,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // 健康檢查端點
-app.get('/api/health', async (req: Request, res: Response) => {
+app.get('/api/health', async (req, res) => {
   try {
     const { data, error } = await supabase
       .from('products')
@@ -105,7 +107,7 @@ app.get('/api/health', async (req: Request, res: Response) => {
 });
 
 // 商品相關 API
-app.get('/api/products', async (req: Request, res: Response) => {
+app.get('/api/products', async (req, res) => {
   try {
     const { data, error } = await supabase
       .from('products')
@@ -130,7 +132,7 @@ app.get('/api/products', async (req: Request, res: Response) => {
 });
 
 // 取得商品分類
-app.get('/api/categories', async (req: Request, res: Response) => {
+app.get('/api/categories', async (req, res) => {
   try {
     const { data, error } = await supabase
       .from('categories')
@@ -155,7 +157,7 @@ app.get('/api/categories', async (req: Request, res: Response) => {
 });
 
 // 取得單一商品
-app.get('/api/products/:id', async (req: Request, res: Response) => {
+app.get('/api/products/:id', async (req, res) => {
   try {
     const { id } = req.params;
     
@@ -195,7 +197,7 @@ app.get('/api/products/:id', async (req: Request, res: Response) => {
 });
 
 // 404 處理
-app.use('*', (req: Request, res: Response) => {
+app.use((req, res) => {
   res.status(404).json({
     success: false,
     error: 'Route not found',

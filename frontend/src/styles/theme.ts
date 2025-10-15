@@ -37,7 +37,6 @@ export const theme = {
     lightPink: '#FCE4EC',
     lightGray: '#F5F5F5',
     textPrimary: '#4A4A4A',
-    borderLight: '#FFE8F0',
     borderMedium: '#FFD6E8',
   },
   

@@ -24,3 +24,4 @@ services:
         value: tucheng-cat-house-jwt-secret-2024
       - key: CORS_ORIGINS
         value: https://tucheng-cat-house-shopping-fdm7.vercel.app
+
