@@ -93,3 +93,21 @@ jspm_packages/
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
+# Screenshot and test images
+*.png
+!frontend/public/*.png
+!frontend/src/**/*.png
+
+# Test and temporary files
+test_*.js
+test_*.ts
+*-test-screenshot.png
+
+# Backend compiled files (already in dist/)
+backend/dist/
+
+# Environment files
+backend/.env
+frontend/.env
+.env
+
